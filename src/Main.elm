@@ -1,10 +1,10 @@
 module Main exposing (..)
 
 import Html exposing (..)
+import Html.Events exposing (onClick)
 
 
---import Html.Attributes exposing (..)
---import Html.Events exposing (onClick)
+-- import Html.Attributes exposing (..)
 
 
 main : Program Never Model Msg
@@ -21,12 +21,12 @@ main =
 
 
 type alias Model =
-    {}
+    { message : String }
 
 
 initialModel : Model
 initialModel =
-    {}
+    { message = "world" }
 
 
 
@@ -34,14 +34,17 @@ initialModel =
 
 
 type Msg
-    = NoOp
+    = Switch
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        NoOp ->
-            model
+        Switch ->
+            if model.message == "world" then
+                { model | message = "Elm" }
+            else
+                { model | message = "world" }
 
 
 
@@ -51,6 +54,6 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ text "Hello, world!"
-        , text (toString model)
+        [ text ("Hello, " ++ model.message ++ "!")
+        , button [ onClick Switch ] [ text "Switch" ]
         ]

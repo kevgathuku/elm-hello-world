@@ -10,7 +10,12 @@ import Main
 suite : Test
 suite =
     describe "App Tests"
-        [ test "updates initialModel message" <|
+        [ test "Correctly Renders Model Content" <|
+            \() ->
+                Main.view { message = "Semaphore" }
+                    |> Query.fromHtml
+                    |> Query.has [ text "Hello, Semaphore!" ]
+        , test "updates initialModel message" <|
             \_ ->
                 Main.initialModel
                     |> Main.update Main.Switch
@@ -20,9 +25,4 @@ suite =
                 { message = "Elm!" }
                     |> Main.update Main.Switch
                     |> Expect.equal Main.initialModel
-        , test "Correctly Renders Model Content" <|
-            \() ->
-                Main.view Main.initialModel
-                    |> Query.fromHtml
-                    |> Query.has [ text "Hello, world!" ]
         ]
